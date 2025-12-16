@@ -30,3 +30,13 @@ Enterprise-style job application tracking system built to demonstrate production
 ### 1) Start Postgres
 ```bash
 docker compose -f infra/docker/docker-compose.yml up -d
+
+### 2) Test Postgres
+```bash
+docker ps
+
+
+
+### 3) Start Server
+```bash
+mvn spring-boot:run

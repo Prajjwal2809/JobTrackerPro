@@ -37,8 +37,7 @@ public class User {
 
     }
     
-    public User(UUID id, String name, String email, String passwordHash, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
-        this.id = id;
+    public User(String name, String email, String passwordHash, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.name = name;
         this.email = email;
         this.passwordHash = passwordHash;
