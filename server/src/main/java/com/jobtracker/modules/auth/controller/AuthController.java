@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jobtracker.modules.auth.dto.AuthResponse;
+import com.jobtracker.modules.auth.dto.LoginRequest;
 import com.jobtracker.modules.auth.dto.RegisterRequest;
 import com.jobtracker.modules.auth.service.AuthService;
 
@@ -29,7 +30,15 @@ public class AuthController {
 
     public AuthResponse register(@Valid @RequestBody RegisterRequest request)
     {
-        System.out.println(request + " received at controller");
         return authService.register(request);
+    }
+
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+
+    public AuthResponse login(@Valid @RequestBody LoginRequest request)
+    {
+        return authService.login(request);
     }
 }

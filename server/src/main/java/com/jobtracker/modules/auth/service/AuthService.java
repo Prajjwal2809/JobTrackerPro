@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jobtracker.modules.auth.dto.AuthResponse;
+import com.jobtracker.modules.auth.dto.LoginRequest;
 import com.jobtracker.modules.auth.dto.RegisterRequest;
 import com.jobtracker.modules.users.entity.User;
 import com.jobtracker.modules.users.repository.UserRepository;
@@ -26,7 +27,6 @@ public class AuthService {
     @Transactional
     public AuthResponse register(RegisterRequest request){
 
-        System.out.println("Registering user with email: " + request);
 
         String email=request.getEmail().trim().toLowerCase();
         
@@ -53,5 +53,23 @@ public class AuthService {
                 "REFRESH_TOKEN_PLACEHOLDER"
         );
         
+    }
+
+    public AuthResponse login(LoginRequest request){
+        
+        String email=request.getEmail().trim().toLowerCase();
+        User user=userRepository.findByEmail(email).orElseThrow(
+            ()-> new IllegalArgumentException("Invalid email or password"));
+
+        boolean passwordMatches=passwordEncoder.matches(request.getPassword(), user.getPasswordHash());
+
+        if(!passwordMatches){
+            throw new IllegalArgumentException("Invalid email or password");
+        }
+
+        return new AuthResponse(
+            "ACCESS_TOKEN_PLACEHOLDER",
+            "REFRESH_TOKEN_PLACEHOLDER"
+        );
     }
 }
