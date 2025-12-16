@@ -1,0 +1,53 @@
+# --------------------
+# OS / Editor
+# --------------------
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# --------------------
+# Environment files (NEVER push)
+# --------------------
+.env
+.env.*
+*.local
+
+# --------------------
+# Node / React
+# --------------------
+node_modules/
+dist/
+build/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --------------------
+# Java / Maven / Spring Boot
+# --------------------
+target/
+*.log
+
+# Maven wrapper (keep if you have it)
+.mvn/
+! .mvn/wrapper/maven-wrapper.jar
+mvnw
+mvnw.cmd
+
+# --------------------
+# Docker
+# --------------------
+*.tar
+
+# --------------------
+# Misc
+# --------------------
+*.pem
+*.key
+*.jks
+*.p12
