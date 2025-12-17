@@ -13,6 +13,7 @@ import com.jobtracker.modules.auth.dto.LoginRequest;
 import com.jobtracker.modules.auth.dto.RegisterRequest;
 import com.jobtracker.modules.users.entity.User;
 import com.jobtracker.modules.users.repository.UserRepository;
+import com.jobtracker.security.JwtService;
 
 
 @Service
@@ -20,11 +21,15 @@ public class AuthService {
     
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-    }
+        this.jwtService = jwtService;
+   }
+
 
     @Transactional
     public AuthResponse register(RegisterRequest request){
@@ -50,8 +55,10 @@ public class AuthService {
 
         userRepository.save(newUser);
 
+        String accessToken=jwtService.generateToken(email);
+
         return new AuthResponse(
-                "ACCESS_TOKEN_PLACEHOLDER",
+                accessToken,
                 "REFRESH_TOKEN_PLACEHOLDER"
         );
         
@@ -69,8 +76,10 @@ public class AuthService {
             throw new UnauthorisedException("Invalid email or password");
         }
 
+        String accessToken=jwtService.generateToken(email);
+
         return new AuthResponse(
-            "ACCESS_TOKEN_PLACEHOLDER",
+            accessToken,
             "REFRESH_TOKEN_PLACEHOLDER"
         );
     }

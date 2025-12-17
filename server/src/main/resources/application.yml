@@ -15,7 +15,12 @@ spring:
   flyway:
     enabled: true
   
-  logging:
-    level:
-      org.springframework.security: DEBUG
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+app:
+  jwt:
+    secret: "t4sTkDKguAXiBGdcwu5t+ZcrHyJrKImhehnsOA5LOWw="
+    expirationMinutes: 60
 
