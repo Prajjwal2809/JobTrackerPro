@@ -6,6 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jobtracker.common.exceptions.ConflictException;
+import com.jobtracker.common.exceptions.UnauthorisedException;
 import com.jobtracker.modules.auth.dto.AuthResponse;
 import com.jobtracker.modules.auth.dto.LoginRequest;
 import com.jobtracker.modules.auth.dto.RegisterRequest;
@@ -31,7 +33,7 @@ public class AuthService {
         String email=request.getEmail().trim().toLowerCase();
         
         if(userRepository.existsByEmail(email)){
-            throw new IllegalArgumentException("Email is already in use");
+            throw new ConflictException("Email is already in use");
         }
 
         String name=request.getName().trim();
@@ -59,12 +61,12 @@ public class AuthService {
         
         String email=request.getEmail().trim().toLowerCase();
         User user=userRepository.findByEmail(email).orElseThrow(
-            ()-> new IllegalArgumentException("Invalid email or password"));
+            ()-> new UnauthorisedException("Invalid email or password"));
 
         boolean passwordMatches=passwordEncoder.matches(request.getPassword(), user.getPasswordHash());
 
         if(!passwordMatches){
-            throw new IllegalArgumentException("Invalid email or password");
+            throw new UnauthorisedException("Invalid email or password");
         }
 
         return new AuthResponse(
