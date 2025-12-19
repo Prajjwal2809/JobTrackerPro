@@ -8,11 +8,13 @@ import JobCard from "./JobCard";
 export default function KanbanColumn({
     status,
     title,
-    jobs
+    jobs,
+    onCardClick,
 } : {
     status: JobStatus;
     title: string;
     jobs: Job[];
+    onCardClick?: (job:Job) => void;
 }) {
    
     const {setNodeRef, isOver} = useDroppable({id: status});
@@ -33,7 +35,7 @@ export default function KanbanColumn({
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
         {jobs.map((job) => (
-          <JobCard key={job.id} job={job} />
+          <JobCard key={job.id} job={job} onClick={() => onCardClick?.(job)} />
         ))}
 
         {jobs.length === 0 && (

@@ -1,4 +1,4 @@
-import type { JobStatus } from '../types/job';
+import type { Job, JobStatus } from '../types/job';
 import { apiClient } from './apiClient';
 
 
@@ -26,4 +26,40 @@ export const updateJobStatus = (jobId: string, status: JobStatus) => {
     return apiClient
     .patch(`api/v1/jobs/${jobId}/status`, { status })
     .then((response) => response.data);
+}
+
+export const createJob = (data: {
+    company: string;
+    title: string;
+    status: JobStatus;
+    locationType: "REMOTE" | "HYBRID" | "ONSITE";
+    location?: string | null;
+    appliedDate?: string;
+    source?: string | null;
+    notes?: string | null;
+}) => {
+    return apiClient
+    .post("api/v1/jobs", data)
+    .then((response) => response.data as Job);
+}
+
+export const deleteJob = (jobId: string) => {
+    return apiClient
+    .delete(`api/v1/jobs/${jobId}`)
+    .then((response) => response.data);
+}
+
+export const updateJob = (jobId: string, data: {
+    company?: string;
+    title?: string;
+    status?: JobStatus;
+    locationType?: "REMOTE" | "HYBRID" | "ONSITE";
+    location?: string | null;
+    appliedDate?: string;
+    source?: string | null;
+    notes?: string | null;
+}) => {
+    return apiClient
+    .put(`api/v1/jobs/${jobId}`, data)
+    .then((response) => response.data as Job);
 }

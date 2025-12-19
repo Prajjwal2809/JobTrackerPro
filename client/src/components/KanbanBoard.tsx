@@ -14,10 +14,12 @@ const COLUMNS: { key: JobStatus; title: string }[] = [
 
 export default function KanbanBoard ({
     jobs,
-    onMove
+    onMove,
+    onCardClick,
 }:{
     jobs: Job[];
     onMove: (jobId: string, newStatus: JobStatus) => void;
+    onCardClick?: (job:Job) => void;
 }){
 
     function handleDragEnd(e:DragEndEvent)
@@ -44,6 +46,7 @@ export default function KanbanBoard ({
             status={c.key}
             title={c.title}
             jobs={jobs.filter((j) => j.status === c.key)}
+            onCardClick={onCardClick}
           />
         ))}
       </Box>
