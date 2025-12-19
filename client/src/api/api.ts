@@ -63,3 +63,11 @@ export const updateJob = (jobId: string, data: {
     .put(`api/v1/jobs/${jobId}`, data)
     .then((response) => response.data as Job);
 }
+
+export function getAnalyticsSummary() {
+  return apiClient.get("/api/v1/analytics/summary").then((res) => res.data);
+}
+
+export function getAnalyticsTimeline() {
+  return apiClient.get("/api/v1/analytics/timeline").then((res) => res.data);
+}

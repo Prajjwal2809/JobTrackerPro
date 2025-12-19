@@ -8,6 +8,7 @@ import { theme } from "./theme/theme";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Board from "./pages/Board";
+import Analytics from "./pages/Analytics";
 
 const router = createBrowserRouter([
   
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
         path: "/board", 
         element: <Board /> 
       },
+      {
+        path: "/analytics",
+        element: <Analytics />,
+      }
     ],
   },
 ]);

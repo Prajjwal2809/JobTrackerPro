@@ -3,13 +3,9 @@ import { Box, Chip, IconButton, Typography } from "@mui/material";
 import BusinessIcon from "@mui/icons-material/Business";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import type { Job } from "../types/job";
+import { STATUS_COLORS } from "../utils/colors";
 
-const STATUS_STRIP:Record<string,string>={
-    APPLIED: "#0078D4",   
-    INTERVIEW: "#7B61FF",  
-    OFFER: "#107C10",     
-    REJECTED: "#D13438",  
-};
+
 
 export default function JobCard({ job, onClick }: { job: Job, onClick?: () => void }) {
     
@@ -43,7 +39,7 @@ export default function JobCard({ job, onClick }: { job: Job, onClick?: () => vo
       sx={{
         width: "6px",
         borderRadius: "6px",
-        bgcolor: STATUS_STRIP[job.status] || "#9AA0A6",
+        bgcolor: STATUS_COLORS[job.status] || "#9AA0A6",
         mr: 1.5,
       }}
     />
