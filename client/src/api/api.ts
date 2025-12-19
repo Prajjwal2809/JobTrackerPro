@@ -1,3 +1,4 @@
+import type { JobStatus } from '../types/job';
 import { apiClient } from './apiClient';
 
 
@@ -21,8 +22,8 @@ export const getJobs = () => {
     .then((response) => response.data?.content ?? response.data);
 }
 
-export const updateJobStatus = (jobId: string, status: string) => {
+export const updateJobStatus = (jobId: string, status: JobStatus) => {
     return apiClient
-    .patch(`api/v1/jobs/${jobId}`, { status })
+    .patch(`api/v1/jobs/${jobId}/status`, { status })
     .then((response) => response.data);
 }

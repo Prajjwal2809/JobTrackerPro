@@ -7,6 +7,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "./theme/theme";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Board from "./pages/Board";
 
 const router = createBrowserRouter([
   
@@ -21,6 +22,14 @@ const router = createBrowserRouter([
   {
     element: <ProtectedRoutes />,
     children: [
+       { 
+        path: "/", 
+        element: <Board /> 
+      },
+      { 
+        path: "/board", 
+        element: <Board /> 
+      },
     ],
   },
 ]);

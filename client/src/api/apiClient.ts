@@ -8,14 +8,14 @@ export const apiClient = axios.create({
   },    
 });
 
-axios.interceptors.request.use((config => {
+apiClient.interceptors.request.use((config => {
   const token = getToken();
   if (token) config.headers.Authorization = `Bearer ${token}`;
 
   return config;
 }));
 
-axios.interceptors.response.use(response => response, error => {
+apiClient.interceptors.response.use(response => response, error => {
   if (error.response && error.response.status === 401) {
     removeToken();
     window.location.href = '/login';
