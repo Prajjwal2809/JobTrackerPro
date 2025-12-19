@@ -3,9 +3,21 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { ProtectedRoutes} from "./routes/ProtectedRoutes";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { theme } from "./theme/theme";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter([
   
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
   {
     element: <ProtectedRoutes />,
     children: [
@@ -15,6 +27,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
     <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );
