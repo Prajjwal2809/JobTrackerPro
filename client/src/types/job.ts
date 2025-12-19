@@ -1,12 +1,14 @@
+export type JobStatus = "APPLIED" | "INTERVIEW" | "OFFER" | "REJECTED";
+export type LocationType = "REMOTE" | "HYBRID" | "ONSITE";
 
-export type jobStatus="APPLIED" | "INTERVIEW" | "OFFER" | "REJECECTED"; 
-
-export interface Job{
-    id: string;
-    title: string;
-    company: string;
-    locationType: "REMOTE" | "ONSITE" | "HYBRID";
-    status: jobStatus;
-    location?: string;
-}
-
+export type Job = {
+  id: string;
+  company: string;
+  title: string;
+  status: JobStatus;
+  locationType: LocationType;
+  location?: string | null;
+  appliedDate?: string;
+  source?: string | null;
+  notes?: string | null;
+};
