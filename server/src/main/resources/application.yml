@@ -36,7 +36,7 @@ spring:
 app:
   jwt:
     secret: ${APP_JWT_SECRET}
-    expirationMinutes: ${APP_JWT_EXPIRATIONMINUTES:60}
+    expirationMinutes: ${APP_JWT_EXPIRATIONMINUTES:5256000}
 
   cors:
     allowedOrigins: ${APP_CORS_ALLOWEDORIGINS}
