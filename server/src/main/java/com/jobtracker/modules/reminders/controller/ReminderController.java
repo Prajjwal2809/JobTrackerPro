@@ -31,6 +31,6 @@ public class ReminderController {
     public List<ReminderResponse> myReminders(
             @CurrentUser UserPrincipal user
     ) {
-        return reminderService.getMyReminders(user.getId().toString());
+        return reminderService.getMyReminders(user.getId());
     }
 }
