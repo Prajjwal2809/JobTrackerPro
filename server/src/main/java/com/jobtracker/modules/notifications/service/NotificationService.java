@@ -21,7 +21,7 @@ public class NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
-    // Internal API used by Job module (2.4)
+   
     public Notification create(UUID userId, NotificationType type, String title, String message, UUID jobId) {
         Notification n = new Notification();
         n.setUserId(userId);

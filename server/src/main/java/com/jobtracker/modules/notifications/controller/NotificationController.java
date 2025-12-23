@@ -6,6 +6,7 @@ import com.jobtracker.modules.notifications.entity.Notification;
 import com.jobtracker.modules.notifications.service.NotificationService;
 import com.jobtracker.security.CurrentUser;
 import com.jobtracker.security.UserPrincipal;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 import java.util.UUID;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @RestController
 @RequestMapping("/api/v1/notifications")

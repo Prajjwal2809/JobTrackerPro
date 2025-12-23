@@ -1,6 +1,11 @@
 package com.jobtracker.security;
 
+import java.util.List;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import com.jobtracker.modules.users.repository.UserRepository;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,11 +27,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         var user = userRepository.findByEmail(email.toLowerCase().trim())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
        
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail())
-                .password(user.getPasswordHash())
-                .authorities("USER")
-                .build();
+        return new UserPrincipal(
+            user.getId(),
+            user.getEmail(),
+            user.getPasswordHash(), 
+            List.of(
+                new SimpleGrantedAuthority("ROLE_USER")
+            ));
     }
     
 }

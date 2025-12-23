@@ -5,20 +5,30 @@ import com.jobtracker.modules.jobs.dto.CreateJobRequest;
 import com.jobtracker.modules.jobs.dto.UpdateJobRequest;
 import com.jobtracker.modules.jobs.entity.Job;
 import com.jobtracker.modules.jobs.entity.JobStatus;
+import com.jobtracker.modules.jobs.events.JobCreatedEvent;
+import com.jobtracker.modules.jobs.events.JobStatusChangedEvent;
+import com.jobtracker.modules.jobs.events.JobUpdatedEvent;
 import com.jobtracker.modules.jobs.repository.JobRepository;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import org.springframework.context.ApplicationEventPublisher;
+
+import com.jobtracker.modules.jobs.events.JobDeletedEvent;
+
 @Service
 public class JobService {
 
     private final JobRepository jobRepository;
+    private final ApplicationEventPublisher publisher;
 
-    public JobService(JobRepository jobRepository) {
+    public JobService(JobRepository jobRepository, ApplicationEventPublisher publisher) {
         this.jobRepository = jobRepository;
+        this.publisher=publisher;
     }
 
     public Job create(UUID userId, CreateJobRequest req) {
@@ -32,7 +42,11 @@ public class JobService {
         job.setAppliedDate(req.getAppliedDate());
         job.setSource(req.getSource());
         job.setNotes(req.getNotes());
-        return jobRepository.save(job);
+        Job saved= jobRepository.save(job);
+
+        publisher.publishEvent(new JobCreatedEvent(userId, saved.getId(), saved.getCompany(), saved.getTitle()));
+        
+        return saved;
     }
 
     public Job get(UUID userId, UUID jobId) {
@@ -63,17 +77,27 @@ public class JobService {
         job.setAppliedDate(req.getAppliedDate());
         job.setSource(req.getSource());
         job.setNotes(req.getNotes());
-        return jobRepository.save(job);
+        
+        Job saved = jobRepository.save(job);
+
+        publisher.publishEvent(new JobUpdatedEvent(userId, saved.getId(), saved.getCompany(), saved.getTitle()));
+        return saved;
     }
 
     public Job updateStatus(UUID userId, UUID jobId, JobStatus status) {
         Job job = get(userId, jobId);
         job.setStatus(status);
-        return jobRepository.save(job);
+
+        Job saved = jobRepository.save(job);
+
+        publisher.publishEvent(new JobStatusChangedEvent(userId, saved.getId(), saved.getCompany(), saved.getTitle(), saved.getStatus()));
+        return saved;
     }
 
     public void delete(UUID userId, UUID jobId) {
         Job job = get(userId, jobId);
         jobRepository.delete(job);
+        publisher.publishEvent(new JobDeletedEvent(userId, job.getId(), job.getCompany(), job.getTitle()));
+        
     }
 }
