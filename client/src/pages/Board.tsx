@@ -85,6 +85,7 @@ export default function Board() {
               appliedDate: formData.appliedDate,
               source: formData.source,
               notes: formData.notes,
+              followUpAt:formData.followUpAt,
             });
 
       const statusAction =

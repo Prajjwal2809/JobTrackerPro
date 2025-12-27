@@ -10,6 +10,7 @@ type formState={
     locationType: "REMOTE" | "HYBRID" | "ONSITE";
     location?: string;
     appliedDate?: string;
+    followUpAt?:string;
     source?: string;
     notes?: string;
 }
@@ -45,6 +46,7 @@ export default function JobModal({
         location: job?.location ?? "",
         appliedDate: job?.appliedDate ?? "",
         source: job?.source ?? "",
+        followUpAt: job?.followUpAt?? "",
         notes: job?.notes ?? "",
     });
     const [error,SetError]=useState<String>("");
@@ -59,6 +61,7 @@ export default function JobModal({
                 location: (job.location ?? "") as string,
                 appliedDate: (job.appliedDate ?? "") as string,
                 source: (job.source ?? "") as string,
+                followUpAt:(job.followUpAt ?? "") as string,
                 notes: (job.notes ?? "") as string,
             });
         }   
@@ -71,6 +74,7 @@ export default function JobModal({
             locationType: "REMOTE",
             location: "",
             appliedDate: "",
+            followUpAt:"",
             source: "",
             notes: "",
         });
@@ -168,13 +172,21 @@ export default function JobModal({
               onChange={(e) => set("appliedDate", e.target.value)}
               fullWidth
             />
-            <TextField
+             <TextField
+              type="date"
+              label="FollowUp date (optional)"
+              InputLabelProps={{ shrink: true }}
+              value={form.followUpAt}
+              onChange={(e) => set("followUpAt", e.target.value)}
+              fullWidth
+            />
+          </Stack>
+          <TextField
               label="Source (optional)"
               value={form.source}
               onChange={(e) => set("source", e.target.value)}
               fullWidth
-            />
-          </Stack>
+          />
 
           <TextField
             label="Notes (optional)"

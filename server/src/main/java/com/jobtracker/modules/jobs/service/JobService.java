@@ -22,6 +22,8 @@ import com.jobtracker.modules.jobs.events.JobDeletedEvent;
 import com.jobtracker.modules.reminders.dto.CreateReminderRequest;
 import com.jobtracker.modules.reminders.service.ReminderService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class JobService {
 
@@ -35,6 +37,7 @@ public class JobService {
         this.reminderService=reminderService;
     }
 
+    @Transactional
     public Job create(UUID userId, CreateJobRequest req) {
         Job job = new Job();
         job.setUserId(userId);
@@ -82,6 +85,7 @@ public class JobService {
         return jobRepository.findByUserId(userId, pageable);
     }
 
+    @Transactional
     public Job update(UUID userId, UUID jobId, UpdateJobRequest req) {
         Job job = get(userId, jobId);
         job.setCompany(req.getCompany());

@@ -7,6 +7,8 @@ import com.jobtracker.modules.reminders.dto.ReminderResponse;
 import com.jobtracker.modules.reminders.entity.Reminder;
 import com.jobtracker.modules.reminders.repository.ReminderRepository;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +35,7 @@ public class ReminderService {
 
     }
 
+    @Transactional
     public void upsert(UUID userId, UUID jobId, LocalDate remindAt)
     {
         reminderRepository.deleteByJobId(jobId);

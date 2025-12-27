@@ -9,6 +9,7 @@ export type Job = {
   locationType: LocationType;
   location?: string | null;
   appliedDate?: string;
+  followUpAt?:string;
   source?: string | null;
   notes?: string | null;
 };

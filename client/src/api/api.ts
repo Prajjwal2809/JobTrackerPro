@@ -36,6 +36,7 @@ export const createJob = (data: {
     location?: string | null;
     appliedDate?: string;
     source?: string | null;
+    followUpAt?: string | null;
     notes?: string | null;
 }) => {
     return apiClient
@@ -58,6 +59,8 @@ export const updateJob = (jobId: string, data: {
     appliedDate?: string;
     source?: string | null;
     notes?: string | null;
+    followUpAt?: string;
+   
 }) => {
     return apiClient
     .put(`api/v1/jobs/${jobId}`, data)
