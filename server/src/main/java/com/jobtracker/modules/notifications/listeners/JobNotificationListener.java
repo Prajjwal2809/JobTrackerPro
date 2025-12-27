@@ -44,8 +44,8 @@ public class JobNotificationListener {
 
     @EventListener
     public void onJobDeleted(JobDeletedEvent e) {
-        String title = "Job status changed";
+        String title = "Job Deleted";
         String body = e.company() + " — " + e.title() ;
-        notificationService.create(e.userId(), NotificationType.JOB_STATUS_CHANGED, title, body, e.jobId());
+        notificationService.create(e.userId(), NotificationType.JOB_DELETED, title, body, e.jobId());
     }
 }
