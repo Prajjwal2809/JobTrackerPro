@@ -74,3 +74,19 @@ export function getAnalyticsSummary() {
 export function getAnalyticsTimeline() {
   return apiClient.get("/api/v1/analytics/timeline").then((res) => res.data);
 }
+
+export function getNotification(){
+    return apiClient.get("/api/v1/notifications").then((res)=>res.data);
+}
+
+export function getNotificationUnreadCount(){
+    return apiClient.get("/api/v1/notifications/unread-count").then((res)=>res.data);
+}
+
+export function markReadNotification(notificationId: string){
+    return apiClient.patch(`/api/v1/notifications/${notificationId}/read`).then((res)=>res.data);
+}
+
+export function deleteNotification(notificationId: string){
+    return apiClient.delete(`/api/v1/notifications/${notificationId}`).then((res)=>res.data);
+}

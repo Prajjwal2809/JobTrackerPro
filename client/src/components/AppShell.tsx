@@ -8,6 +8,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import NotificationsDrawer from "./NotificationDrawer";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   function logout() {
@@ -67,6 +68,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
             <Box sx={{ flex: 1 }} />
 
+            <NotificationsDrawer />
             {/* Logout */}
             <Button variant="outlined" onClick={logout}>
               Logout
