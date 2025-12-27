@@ -68,7 +68,7 @@ export default function NotificationsDrawer() {
 
   useEffect(() => {
     refreshAll();
-    const t = setInterval(refreshAll, 1); // polling
+    const t = setInterval(refreshAll, 15000); // polling
     return () => clearInterval(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
