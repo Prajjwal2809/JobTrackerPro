@@ -29,6 +29,8 @@ public class CreateJobRequest {
 
     private String source;
 
+    private LocalDate followupAt;
+
     @Size(max = 2000)
     private String notes;
 
@@ -56,4 +58,8 @@ public class CreateJobRequest {
 
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
+
+    public LocalDate getFollowUpAt() { return followupAt; }
+    public void setFollowUpAt(LocalDate followUpAt) { this.followupAt=followUpAt; }
+
 }

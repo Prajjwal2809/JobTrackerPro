@@ -1,5 +1,7 @@
 package com.jobtracker.modules.reminders.dto;
 
+import java.time.LocalDate;
+
 import com.jobtracker.modules.reminders.domain.ReminderStatus;
 
 import java.time.OffsetDateTime;
@@ -9,13 +11,13 @@ public class ReminderResponse {
 
     private UUID id;
     private UUID jobId;
-    private OffsetDateTime remindAt;
+    private LocalDate remindAt;
     private ReminderStatus status;
 
     public ReminderResponse(
             UUID id,
             UUID jobId,
-            OffsetDateTime remindAt,
+            LocalDate remindAt,
             ReminderStatus status
     ) {
         this.id = id;
@@ -32,7 +34,7 @@ public class ReminderResponse {
         return jobId;
     }
 
-    public OffsetDateTime getRemindAt() {
+    public LocalDate getRemindAt() {
         return remindAt;
     }
 

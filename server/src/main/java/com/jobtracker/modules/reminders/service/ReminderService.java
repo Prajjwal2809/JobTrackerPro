@@ -1,5 +1,7 @@
 package com.jobtracker.modules.reminders.service;
 
+import java.time.LocalDate;
+
 import com.jobtracker.modules.reminders.dto.CreateReminderRequest;
 import com.jobtracker.modules.reminders.dto.ReminderResponse;
 import com.jobtracker.modules.reminders.entity.Reminder;
@@ -19,32 +21,39 @@ public class ReminderService {
         this.reminderRepository = reminderRepository;
     }
 
-    public ReminderResponse create(UUID userId, CreateReminderRequest request) {
+    public void create(UUID userId, UUID jobId, LocalDate remindAt) {
         Reminder reminder = new Reminder(
                 userId,
-                request.getJobId(),
-                request.getRemindAt()
+                jobId,
+                remindAt
+               
         );
 
-        Reminder saved = reminderRepository.save(reminder);
+        reminderRepository.save(reminder);
 
-        return new ReminderResponse(
-                saved.getId(),
-                saved.getJobId(),
-                saved.getRemindAt(),
-                saved.getStatus()
+    }
+
+    public void upsert(UUID userId, UUID jobId, LocalDate remindAt)
+    {
+        reminderRepository.deleteByJobId(jobId);
+
+        Reminder reminder=new Reminder(userId, 
+            jobId, 
+            remindAt
         );
+        reminderRepository.save(reminder);
+
     }
 
-    public List<ReminderResponse> getMyReminders(UUID userId) {
-        return reminderRepository.findByUserId(userId)
-                .stream()
-                .map(r -> new ReminderResponse(
-                        r.getId(),
-                        r.getJobId(),
-                        r.getRemindAt(),
-                        r.getStatus()
-                ))
-                .toList();
-    }
+    // public List<ReminderResponse> getMyReminders(UUID userId) {
+    //     return reminderRepository.findByUserId(userId)
+    //             .stream()
+    //             .map(r -> new ReminderResponse(
+    //                     r.getId(),
+    //                     r.getJobId(),
+    //                     r.getRemindAt(),
+    //                     r.getStatus()
+    //             ))
+    //             .toList();
+    // }
 }

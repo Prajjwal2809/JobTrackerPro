@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS reminders (
     id        UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id   UUID NOT NULL,
     job_id    UUID NOT NULL,
-    remind_at TIMESTAMPTZ NOT NULL,
+    remind_at DATE NOT NULL,
     status    VARCHAR(20) NOT NULL DEFAULT 'PENDING'
 );
 

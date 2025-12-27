@@ -1,5 +1,7 @@
 package com.jobtracker.modules.reminders.entity;
 
+import java.time.LocalDate;
+
 import com.jobtracker.modules.reminders.domain.ReminderStatus;
 
 import jakarta.persistence.*;
@@ -21,19 +23,29 @@ public class Reminder {
     @Column(nullable = false)
     private UUID jobId;
 
-    @Column(nullable = false)
-    private OffsetDateTime remindAt;
+    @Column(name = "remind_at", nullable = false)
+    private LocalDate remindAt;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ReminderStatus status = ReminderStatus.PENDING;
+    
+
+    @Column(name="reminder_key")
+
+    private String reminderKey;
 
     protected Reminder() {}
 
-    public Reminder(UUID userId, UUID jobId, OffsetDateTime remindAt) {
+    public Reminder(UUID userId, UUID jobId, LocalDate remindAt) {
         this.userId = userId;
         this.jobId = jobId;
         this.remindAt = remindAt;
+        this.reminderKey= userId.toString().concat(" : ".concat(
+            jobId.toString().concat(" : ".concat(
+                remindAt.toString()
+            ))
+        ));
     }
 
     public UUID getId() {
@@ -48,7 +60,7 @@ public class Reminder {
         return jobId;
     }
 
-    public OffsetDateTime getRemindAt() {
+    public LocalDate getRemindAt() {
         return remindAt;
     }
 

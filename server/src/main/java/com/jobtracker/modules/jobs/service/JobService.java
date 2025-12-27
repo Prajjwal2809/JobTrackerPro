@@ -19,16 +19,20 @@ import java.util.UUID;
 import org.springframework.context.ApplicationEventPublisher;
 
 import com.jobtracker.modules.jobs.events.JobDeletedEvent;
+import com.jobtracker.modules.reminders.dto.CreateReminderRequest;
+import com.jobtracker.modules.reminders.service.ReminderService;
 
 @Service
 public class JobService {
 
     private final JobRepository jobRepository;
     private final ApplicationEventPublisher publisher;
+    private final ReminderService reminderService;
 
-    public JobService(JobRepository jobRepository, ApplicationEventPublisher publisher) {
+    public JobService(JobRepository jobRepository, ApplicationEventPublisher publisher, ReminderService reminderService) {
         this.jobRepository = jobRepository;
         this.publisher=publisher;
+        this.reminderService=reminderService;
     }
 
     public Job create(UUID userId, CreateJobRequest req) {
@@ -42,9 +46,19 @@ public class JobService {
         job.setAppliedDate(req.getAppliedDate());
         job.setSource(req.getSource());
         job.setNotes(req.getNotes());
+        job.setFollowUpAt(req.getFollowUpAt());
         Job saved= jobRepository.save(job);
 
         publisher.publishEvent(new JobCreatedEvent(userId, saved.getId(), saved.getCompany(), saved.getTitle()));
+
+
+        if(req.getFollowUpAt()!=null)
+        {
+            reminderService.create(userId,
+                saved.getId(),
+                req.getFollowUpAt()
+            );
+        }
         
         return saved;
     }
@@ -77,10 +91,20 @@ public class JobService {
         job.setAppliedDate(req.getAppliedDate());
         job.setSource(req.getSource());
         job.setNotes(req.getNotes());
+        job.setFollowUpAt(req.getFollowUpAt());
         
         Job saved = jobRepository.save(job);
 
         publisher.publishEvent(new JobUpdatedEvent(userId, saved.getId(), saved.getCompany(), saved.getTitle()));
+       
+         if(req.getFollowUpAt()!=null)
+        {
+            reminderService.upsert(userId,
+                saved.getId(),
+                req.getFollowUpAt()
+            );
+        }
+       
         return saved;
     }
 

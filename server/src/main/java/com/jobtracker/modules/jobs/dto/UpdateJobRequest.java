@@ -25,6 +25,8 @@ public class UpdateJobRequest {
 
     private String source;
 
+    private LocalDate followUpAt;
+
     @Size(max = 2000)
     private String notes;
 
@@ -49,4 +51,7 @@ public class UpdateJobRequest {
 
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
+
+    public LocalDate getFollowUpAt() { return followUpAt; }
+    public void setFollowUpAt(LocalDate followUpAt) { this.followUpAt=followUpAt; }
 }

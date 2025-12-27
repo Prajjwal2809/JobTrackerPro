@@ -48,6 +48,9 @@ public class Job {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
 
+    @Column(name="follow_up_at")
+    private LocalDate followUpAt;
+
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = Instant.now();
@@ -89,4 +92,8 @@ public class Job {
 
     public Instant getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }
+
+    public LocalDate getFollowUpAt() { return followUpAt; }
+    public void setFollowUpAt(LocalDate followUpAt) { this.followUpAt = followUpAt; }
+
 }
